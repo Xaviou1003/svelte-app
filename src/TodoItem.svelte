@@ -1,5 +1,5 @@
 <script>
-  import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+  import { getFirestore, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
   export let item = {};
   export let uid = '';
@@ -19,9 +19,18 @@
   <li>
     {item.quantity} x {item.label}
   </li>
+  <a
+    href={'#'}
+    on:click={() => deleteDoc(doc(db, `users/${uid}/products`, item.id))}
+    >&#10006;</a
+  >
 </div>
 
 <style>
+  a {
+    margin-left: 12px;
+    color: red;
+  }
   div {
     display: flex;
     margin: auto;

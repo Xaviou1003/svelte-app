@@ -31,12 +31,20 @@
           {
             ...change.doc.data(),
             id: change.doc.id,
-            uid: change.doc.id + change.doc.data().isBought,
           },
         ];
       }
       if (change.type === 'removed') {
         items = items.filter((i) => i.id !== change.doc.id);
+      }
+      if (change.type === 'modified') {
+        items = [
+          ...items.filter((i) => i.id !== change.doc.id),
+          {
+            ...change.doc.data(),
+            id: change.doc.id,
+          },
+        ];
       }
     });
   });
@@ -47,7 +55,7 @@
 <div>
   <h4>{title}</h4>
   <ul>
-    {#each items as item (item.uid)}
+    {#each items as item (item.id)}
       <TodoItem bind:item {uid} />
     {/each}
   </ul>
