@@ -1,10 +1,9 @@
 <script>
   import { getFirestore, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+  import { db } from './main';
 
   export let item = {};
   export let uid = '';
-
-  const db = getFirestore();
 
   const putToBasket = () => {
     const productRef = doc(db, `users/${uid}/products`, item.id);

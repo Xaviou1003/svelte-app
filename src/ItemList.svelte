@@ -1,21 +1,13 @@
 <script>
   import { onDestroy } from 'svelte';
-  import {
-    addDoc,
-    collection,
-    query,
-    where,
-    onSnapshot,
-    getDocs,
-    getFirestore,
-  } from 'firebase/firestore';
+  import { collection, query, where, onSnapshot } from 'firebase/firestore';
   import TodoItem from './TodoItem.svelte';
+  import { db } from './main';
 
   export let title = '';
   export let uid = '';
   export let isBought = false;
 
-  const db = getFirestore();
   let items = [];
 
   const q = query(

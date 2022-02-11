@@ -1,10 +1,11 @@
 <script>
-  import { getFirestore } from 'firebase/firestore';
   import { collection, addDoc } from 'firebase/firestore';
+  import { logEvent } from 'firebase/analytics';
+
+  import { analytics, db } from './main';
 
   export let uid = '';
 
-  const db = getFirestore();
   let label = '';
   let quantity = 1;
 
@@ -14,6 +15,11 @@
         label,
         quantity,
         isBought: false,
+      });
+      logEvent(analytics, 'add_product', {
+        debug_mode: true,
+        label,
+        quantity,
       });
       label = '';
       quantity = 1;
