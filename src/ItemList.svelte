@@ -12,7 +12,10 @@
   <h4>{title}</h4>
   <ul>
     {#each items.filter(filterFunction) as item (item.id)}
-      <Item bind:item />
+      <Item
+        bind:item
+        deleteItem={() => (items = items.filter((i) => i.id !== item.id))}
+      />
     {/each}
   </ul>
 </div>

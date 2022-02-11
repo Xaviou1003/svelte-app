@@ -1,5 +1,6 @@
 <script>
   export let item = {};
+  export let deleteItem;
 
   const putInBasket = () => {
     item.isBought = !item.isBought;
@@ -11,7 +12,7 @@
   <li>
     {item.quantity} x {item.label}
   </li>
-  <a href={'#'}>&#10006;</a>
+  <a href={'#'} on:click={deleteItem}>&#10006;</a>
 </div>
 
 <style>
