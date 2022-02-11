@@ -1,32 +1,21 @@
 <script>
   import AddItem from './AddItem.svelte';
+  import ItemList from './ItemList.svelte';
 
-  import TodoItem from './TodoItem.svelte';
-
-  let items = [{ label: 'tests', quantity: 1, isBought: false, id: 0 }];
+  let items = [{ label: 'Bananes', quantity: 10, isBought: false, id: 0 }];
 </script>
 
 <main>
   <h1>Shopping list</h1>
   <AddItem bind:items />
   <div class="container">
-    <div>
-      <h4>To buy</h4>
-      <ul>
-        {#each items.filter((it) => !it.isBought) as item (item.id)}
-          <TodoItem bind:item />
-        {/each}
-      </ul>
-    </div>
+    <ItemList
+      title="To purchase"
+      filterFunction={(it) => !it.isBought}
+      bind:items
+    />
     <hr />
-    <div>
-      <h4>Bought</h4>
-      <ul>
-        {#each items.filter((it) => it.isBought) as item (item.id)}
-          <TodoItem bind:item />
-        {/each}
-      </ul>
-    </div>
+    <ItemList title="Bought" filterFunction={(it) => it.isBought} bind:items />
   </div>
 </main>
 
