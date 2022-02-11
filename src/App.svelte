@@ -1,33 +1,32 @@
 <script>
+  import { getAuth } from 'firebase/auth';
+
   import AddItem from './AddItem.svelte';
+  import Login from './Login.svelte';
+  import ItemList from './ItemList.svelte';
 
-  import TodoItem from './TodoItem.svelte';
+  let connectedUser;
 
-  let items = [{ label: 'tests', quantity: 1, isBought: false, id: 0 }];
+  const auth = getAuth();
+
+  auth.onAuthStateChanged((u) => (connectedUser = u));
+
+  const logout = () => auth.signOut();
 </script>
 
 <main>
-  <h1>Shopping list</h1>
-  <AddItem bind:items />
-  <div class="container">
-    <div>
-      <h4>To buy</h4>
-      <ul>
-        {#each items.filter((it) => !it.isBought) as item (item.id)}
-          <TodoItem bind:item />
-        {/each}
-      </ul>
+  {#if connectedUser}
+    <button on:click={logout}>Logout</button>
+    <h1>Shopping list</h1>
+    <AddItem uid={connectedUser.uid} />
+    <div class="container">
+      <ItemList uid={connectedUser.uid} isBought={false} title="To buy" />
+      <hr />
+      <ItemList uid={connectedUser.uid} isBought={true} title="Bought" />
     </div>
-    <hr />
-    <div>
-      <h4>Bought</h4>
-      <ul>
-        {#each items.filter((it) => it.isBought) as item (item.id)}
-          <TodoItem bind:item />
-        {/each}
-      </ul>
-    </div>
-  </div>
+  {:else}
+    <Login />
+  {/if}
 </main>
 
 <style>

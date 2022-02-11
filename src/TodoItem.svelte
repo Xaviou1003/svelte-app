@@ -1,13 +1,21 @@
 <script>
-  export let item = {};
+  import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 
-  const putInBasket = () => {
-    item.isBought = !item.isBought;
+  export let item = {};
+  export let uid = '';
+
+  const db = getFirestore();
+
+  const putToBasket = () => {
+    const productRef = doc(db, `users/${uid}/products`, item.id);
+    updateDoc(productRef, {
+      isBought: !item.isBought,
+    });
   };
 </script>
 
 <div>
-  <input type="checkbox" on:click={putInBasket} checked={item.isBought} />
+  <input type="checkbox" on:click={putToBasket} checked={item.isBought} />
   <li>
     {item.quantity} x {item.label}
   </li>

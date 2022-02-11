@@ -1,14 +1,22 @@
 <script>
+  import { getFirestore } from 'firebase/firestore';
+  import { collection, addDoc } from 'firebase/firestore';
+
+  export let uid = '';
+
+  const db = getFirestore();
   let label = '';
   let quantity = 1;
-  export let items = [];
 
   const addItem = () => {
     if (label != '') {
-      items.push({ label, quantity, isBought: false, id: items.length });
+      addDoc(collection(db, `users/${uid}/products`), {
+        label,
+        quantity,
+        isBought: false,
+      });
       label = '';
       quantity = 1;
-      items = items;
     }
   };
 </script>
